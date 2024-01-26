@@ -44,12 +44,10 @@ export const autoinvite: CommandInt = {
           ephemeral: true,
         });
       })
-      .then(() => {
-        // success
-        interaction.reply({
+      .then(() => interaction.reply({
           content: `✅ Sent invite to ${user.username}`,
           ephemeral: true,
-        });
-      });
+        })
+      );
   },
 };

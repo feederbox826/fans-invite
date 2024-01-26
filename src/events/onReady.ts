@@ -41,4 +41,5 @@ export const onReady = async (client: Client): Promise<void> => {
     );
   }
   Logger.info(client.user.tag + " is ready!");
+  client.user.setActivity("Can't receive DMs");
 };

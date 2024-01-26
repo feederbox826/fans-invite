@@ -47,11 +47,10 @@ export const maninvite: CommandInt = {
         content: `Failed to send invite to ${user.username}: ${error}`,
         ephemeral: true,
       });
-    });
-    // success
-    return interaction.reply({
-      content: `✅ Sent invite to ${user.username}`,
-      ephemeral: true,
-    });
+    }).then(() => interaction.reply({
+        content: `✅ Sent invite to ${user.username}`,
+        ephemeral: true,
+      })
+    );
   },
 };
