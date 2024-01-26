@@ -10,5 +10,9 @@
   "stashbox": {
     "baseurl": "https://my-stash-box.example.com",
     "apikey": "secretApiKey"
+  },
+  "invite": {
+    "contactPerson": "John Smith",
+    "contactChannel": "[#helpdesk](https://exmaple.com/help)"
   }
 }
