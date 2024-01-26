@@ -24,30 +24,30 @@ export const autoinvite: CommandInt = {
     const inviteKey = await getInvite().catch(error => {
       Logger.error(`Failed to get invite key: ${error}`);
       interaction.reply({
-        content: `Failed to get invite key: ${error}`,
+        content: `❌ Failed to get invite key: ${error}`,
         ephemeral: true,
       });
     });
     if (!inviteKey) {
-      Logger.error("Failed to get invite key - no error");
-      return interaction.reply({
-        content: "Failed to get invite key - no error",
-        ephemeral: true,
-      });
+      return Logger.error("❌ Failed to get invite key - no error");
     }
     // send invite with template
     const message = inviteTemplate(inviteKey);
-    await user.send(message).catch(error => {
-      Logger.error(`Failed to send invite to ${user.username}: ${error}`);
-      return interaction.reply({
-        content: `Failed to send invite to ${user.username}: ${error}`,
-        ephemeral: true,
+    await user
+      .send(message)
+      .catch(error => {
+        Logger.error(`Failed to send invite to ${user.username}: ${error}`);
+        interaction.reply({
+          content: `❌ Failed to send invite to ${user.username}: ${error}`,
+          ephemeral: true,
+        });
+      })
+      .then(() => {
+        // success
+        interaction.reply({
+          content: `✅ Sent invite to ${user.username}`,
+          ephemeral: true,
+        });
       });
-    });
-    // success
-    return interaction.reply({
-      content: `✅ Sent invite to ${user.username}`,
-      ephemeral: true,
-    });
   },
 };

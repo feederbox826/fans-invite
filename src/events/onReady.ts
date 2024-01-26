@@ -7,7 +7,6 @@ import { REST } from "@discordjs/rest";
 import { APIApplicationCommandOption, Routes } from "discord-api-types/v9";
 // custom types
 import { CommandList } from "../commands/_CommandList";
-// db
 
 export const onReady = async (client: Client): Promise<void> => {
   const rest = new REST({ version: "9" }).setToken(config.discord.token);

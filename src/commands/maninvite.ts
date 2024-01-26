@@ -32,7 +32,7 @@ export const maninvite: CommandInt = {
     if (!inviteRegex.test(inviteKey)) {
       Logger.debug(`Invalid invite key ${inviteKey}`);
       return interaction.reply({
-        content: "Invalid invite key",
+        content: "❌ Invalid invite key",
         ephemeral: true,
       });
     }
@@ -40,7 +40,7 @@ export const maninvite: CommandInt = {
     // send invite with template
     const message = inviteTemplate(inviteKey);
     await user.send(message).catch(error => {
-      Logger.error(`Failed to send invite to ${user.username}: ${error}`);
+      Logger.error(`❌ Failed to send invite to ${user.username}: ${error}`);
       return interaction.reply({
         content: `Failed to send invite to ${user.username}: ${error}`,
         ephemeral: true,

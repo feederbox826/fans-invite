@@ -10,19 +10,11 @@ const InviteQuery = gql`
 `;
 
 interface Invite {
-  errors?: [
-    {
-      message: string;
-      path: string[];
-    },
-  ];
-  data: {
-    generateInviteCode: string;
-  };
+  generateInviteCode: string;
 }
 
 const client = new GraphQLClient(`${config.stashbox.baseurl}/graphql`, {
-  method: "GET",
+  method: "POST",
   headers: {
     ApiKey: config.stashbox.apikey,
     "User-Agent": "feederbox826/fans-invite-bot",
@@ -30,9 +22,8 @@ const client = new GraphQLClient(`${config.stashbox.baseurl}/graphql`, {
 });
 
 export async function getInvite(): Promise<string> {
-  const data = (await client.request(InviteQuery)) as Invite;
-  if (data.errors) {
-    throw new Error(data.errors[0].message);
-  }
-  return data.data.generateInviteCode;
+  const data = (await client.request(InviteQuery).catch(error => {
+    throw new Error(`Failed to get invite key: ${error}`);
+  })) as Invite;
+  return data.generateInviteCode;
 }
