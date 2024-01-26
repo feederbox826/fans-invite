@@ -1,0 +1,14 @@
+{
+  "logging": true,
+  "discord": {
+    "token": "supersecrettoken",
+    "clientId": "000",
+    "guilds": [
+      "000"
+    ]
+  },
+  "stashbox": {
+    "baseurl": "https://my-stash-box.example.com",
+    "apikey": "secretApiKey"
+  }
+}
