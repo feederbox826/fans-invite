@@ -5,8 +5,7 @@ import { CommandInt } from "../types/CommandInt";
 // modules
 import Logger from "../utils/logger";
 // config
-import { inviteTemplate } from "../utils/invite";
-import { getInvite } from "../utils/gql";
+import { sendInvite } from "../utils/sendInvite";
 
 export const autoinvite: CommandInt = {
   data: new SlashCommandBuilder()
@@ -23,31 +22,19 @@ export const autoinvite: CommandInt = {
   run: async interaction => {
     // get invite key
     const user = interaction.options.getUser("user");
-    const inviteKey = await getInvite().catch(error => {
-      Logger.error(`Failed to get invite key: ${error}`);
-      interaction.reply({
-        content: `❌ Failed to get invite key: ${error}`,
-        ephemeral: true,
-      });
-    });
-    if (!inviteKey) {
-      return Logger.error("❌ Failed to get invite key - no error");
-    }
-    // send invite with template
-    const message = inviteTemplate(inviteKey);
-    await user
-      .send(message)
-      .catch(error => {
-        Logger.error(`Failed to send invite to ${user.username}: ${error}`);
+    return await sendInvite(user)
+      .then(() =>
         interaction.reply({
-          content: `❌ Failed to send invite to ${user.username}: ${error}`,
-          ephemeral: true,
-        });
-      })
-      .then(() => interaction.reply({
           content: `✅ Sent invite to ${user.username}`,
           ephemeral: true,
-        })
-      );
+        }),
+      )
+      .catch(error => {
+        Logger.error(`❌ Failed to send invite to ${user.username}: ${error}`);
+        return interaction.reply({
+          content: `Failed to send invite to ${user.username}: ${error}`,
+          ephemeral: true,
+        });
+      });
   },
 };

@@ -12,7 +12,7 @@ interface Config {
   invite: {
     contactPerson: string;
     contactChannel: string;
-  }
+  };
 }
 
 import * as untypedConfig from "../config.json";
