@@ -1,5 +1,5 @@
 // import types
-import { SlashCommandBuilder } from "discord.js";
+import { SlashCommandBuilder, PermissionFlagsBits } from "discord.js";
 // custom types
 import { CommandInt } from "../types/CommandInt";
 // modules
@@ -22,7 +22,9 @@ export const maninvite: CommandInt = {
         .setName("invitekey")
         .setDescription("Invite key to send")
         .setRequired(false),
-    ) as SlashCommandBuilder,
+    )
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
+    .setDMPermission(false) as SlashCommandBuilder,
   run: async interaction => {
     // validate invite code
     const inviteRegex = new RegExp(
