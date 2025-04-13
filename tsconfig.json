@@ -2,9 +2,9 @@
   "compilerOptions": {
     "incremental": true,
     "outDir": "./dist",
-    "target": "es2020",
-    "module": "CommonJS",
-    "moduleResolution": "node",
+    "target": "es2021",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "resolveJsonModule": true,
     "esModuleInterop": true
   }
