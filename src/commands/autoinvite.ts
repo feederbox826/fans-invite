@@ -7,6 +7,8 @@ import Logger from "../utils/logger";
 // config
 import { sendInvite } from "../utils/sendInvite";
 
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
 export const autoinvite: CommandInt = {
   data: new SlashCommandBuilder()
     .setName("autoinvite")
@@ -22,6 +24,10 @@ export const autoinvite: CommandInt = {
   run: async interaction => {
     // get invite key
     const user = interaction.options.getUser("user");
+
+    // add small delay (1000 milliseconds = 1 second)
+    await delay(1000);
+
     return await sendInvite(user)
       .then(() =>
         interaction.reply({
