@@ -11,8 +11,7 @@ export const testinvite: CommandInt = {
     .setDescription("test sending me an invite") as SlashCommandBuilder,
   run: async interaction => {
     // validate invite code
-    const user = interaction.options.getUser("user");
-    const inviteKey = interaction.options.getString("invitekey");
+    const user = interaction.user;
     return await handleInvite(interaction, user, "not-a-real-invite-key")
   }
 };
