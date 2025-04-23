@@ -1,11 +1,9 @@
 // import types
-import { SlashCommandBuilder, PermissionFlagsBits } from "discord.js";
+import { SlashCommandBuilder, PermissionFlagsBits, InteractionContextType } from "discord.js";
 // custom types
 import { CommandInt } from "../types/CommandInt";
-// modules
-import Logger from "../utils/logger";
 // config
-import { sendInvite } from "../utils/sendInvite";
+import { handleInvite } from "../utils/sendInvite";
 
 export const maninvite: CommandInt = {
   data: new SlashCommandBuilder()
@@ -24,24 +22,11 @@ export const maninvite: CommandInt = {
         .setRequired(false),
     )
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
-    .setDMPermission(false) as SlashCommandBuilder,
+    .setContexts([InteractionContextType.Guild]) as SlashCommandBuilder,
   run: async interaction => {
     // validate invite code
     const user = interaction.options.getUser("user");
     const inviteKey = interaction.options.getString("invitekey");
-    return await sendInvite(user, inviteKey)
-      .then(() =>
-        interaction.reply({
-          content: `✅ Sent invite to ${user.username}`,
-          ephemeral: true,
-        }),
-      )
-      .catch(error => {
-        Logger.error(`❌ Failed to send invite to ${user.username}: ${error}`);
-        return interaction.reply({
-          content: `Failed to send invite to ${user.username}: ${error}`,
-          ephemeral: true,
-        });
-      });
-  },
+    return await handleInvite(interaction, user, inviteKey)
+  }
 };
