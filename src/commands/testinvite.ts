@@ -12,6 +12,6 @@ export const testinvite: CommandInt = {
   run: async interaction => {
     // validate invite code
     const user = interaction.user;
-    return await handleInvite(interaction, user, "not-a-real-invite-key")
+    return await handleInvite(interaction, user, "00000000-0000-0000-0000-000000000000")
   }
 };
